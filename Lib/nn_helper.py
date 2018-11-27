@@ -11,7 +11,7 @@ def conv3x3(c_in,c_out,  stride = 1,padding = 1,group = 1,bias = False):
 def conv1x1(c_in,c_out,group = 1,bias = False):
  return conv2d(c_in,c_out , stride = 1, kernel_size = 1,padding = 0, group = group, bias = bias)
 
-def deconv_upsample(c_in,c_out,upsample_rate = 2):
+def deconv_upsample(c_in,c_out,upsample_rate = 2,group = 1):
   ''' deconvolution for upsampling, 
       upsample_rate controls the upsampling rate, can be 2, 4 , 8 or 16.
       if upsample_rate==2, then the tensor width and height are 2x of the original size.
@@ -19,5 +19,5 @@ def deconv_upsample(c_in,c_out,upsample_rate = 2):
   stride = 1*upsample_rate
   kernel_size = 2*upsample_rate
   #TODO
-  tc.nn.ConvTranspose2d(c_in,c_out,kernel_size=kernel_size,
-    stride = stride,padding=0, output_padding=0, groups=1, bias=True, dilation=1)
+  return tc.nn.ConvTranspose2d(c_in,c_out,kernel_size=kernel_size,
+    stride = stride,padding=0, output_padding=0, groups=group, bias=False, dilation=1)

@@ -20,4 +20,7 @@ ResNeXt152.input_block_in_channels = 64
 
 #IDA config
 IDA = edict()
+IDA.merge_type = 2#should be 1 or 2 or 3 or 4
 IDA.fixed_merge_channels = 32#same as the original paper
+
+#
