@@ -1,0 +1,6 @@
+IDA merge strategy
+
+1. Adaptive channel merge      : normal addition, keep channels of each stage.
+2. Fixed channel merge         : normal addition, keep same channels(eg.32 in the original paper) for each stage.
+3. Gated adaptive channel merge: gated normal addition, keep channels of each stage.
+4. Gated fixed channel merge   : gated normal addition, keep same channels(eg.32 in the original paper) for each stage.
