@@ -3,7 +3,7 @@ from os import path as osp
 from enum import Enum
 import torch
 
-class SaveLoadFlag(Enum):
+class Flag_save_load(Enum):
   #Save on CPU
   SC = 0
   #Save on GPU
@@ -39,7 +39,7 @@ class PytorchCkpt:
     self._model = None
     self._optimizer = None
     self._epoch = None
-    self._save_flag = SaveLoadFlag.SG
+    self._save_flag = Flag_save_load.SG
 
   def _get_model_path(self,prefix,suffix):
     save_path = osp.join(prefix,'model'+suffix+'.pt')
@@ -64,14 +64,14 @@ class PytorchCkpt:
     Arg:
         train_mode:whether to load model for training
     '''
-    if save_flag is SaveLoadFlag.SG and load_flag is SaveLoadFlag.LC:
+    if save_flag is Flag_save_load.SG and load_flag is Flag_save_load.LC:
       device = torch.device('cpu')
       model.load_state_dict(torch.load(path, map_location=device))
-    elif save_flag is SaveLoadFlag.SG and load_flag is SaveLoadFlag.LG:
+    elif save_flag is Flag_save_load.SG and load_flag is Flag_save_load.LG:
       device = torch.device("cuda")
       model.load_state_dict(torch.load(path))
       model.to(device)
-    elif save_flag is SaveLoadFlag.SC and load_flag is SaveLoadFlag.LG:
+    elif save_flag is Flag_save_load.SC and load_flag is Flag_save_load.LG:
       device = torch.device("cuda")
       model.load_state_dict(torch.load(path, map_location="cuda:0"))
       model.to(device)
@@ -87,8 +87,8 @@ class PytorchCkpt:
 
   #A common PyTorch convention is to save models using either a .pt or .pth file extension
   def save(self,prefix,model,save_flag,optimizer=None,epoch=None,suffix = ''):
-    assert(isinstance(save_flag,SaveLoadFlag))
-    assert(save_flag is SaveLoadFlag.SC or save_flag is SaveLoadFlag.SG)
+    assert(isinstance(save_flag,Flag_save_load))
+    assert(save_flag is Flag_save_load.SC or save_flag is Flag_save_load.SG)
     #save model
     save_path = self._get_model_path(prefix,suffix)
     self._save_model(save_path, model)
@@ -102,8 +102,8 @@ class PytorchCkpt:
     torch.save(addition_dict,save_path)
 
   def load(self,prefix,model,load_flag, optimizer = None,train_mode = True,suffix=''):
-    assert(isinstance(load_flag,SaveLoadFlag))
-    assert(load_flag is SaveLoadFlag.LC or load_flag is SaveLoadFlag.LG)
+    assert(isinstance(load_flag,Flag_save_load))
+    assert(load_flag is Flag_save_load.LC or load_flag is Flag_save_load.LG)
     self._reset()
     #load other non-parameter variables
     load_path = self._get_addition_path(prefix,suffix)

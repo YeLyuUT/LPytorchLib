@@ -11,6 +11,5 @@ cfg = _C
 cfg.cache_dir=None
 
 #model saving directory
-cfg.model_saving_path = '/media/yelyu/18339a64-762e-4258-a609-c0851cd8163e/YeLyu/Work/PytorchLib/Data/saved_model'
-
+cfg.model_saving_dir = '/media/yelyu/18339a64-762e-4258-a609-c0851cd8163e/YeLyu/Work/PytorchLib/Data/saved_model'
 
